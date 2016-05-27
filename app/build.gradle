@@ -1,0 +1,41 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        applicationId "com.darien.openweathertest"
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+
+    // Inversion of control
+    apt 'com.squareup.dagger:dagger-compiler:1.2.5'
+    // Inversion of control interface
+    apt 'com.jakewharton:butterknife-compiler:8.0.1'
+    
+    compile 'com.android.support:support-v4:23.4.0'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:design:23.4.0'
+    compile 'com.squareup.dagger:dagger:1.2.5'
+    compile 'com.jakewharton:butterknife:8.0.1'
+    compile 'org.greenrobot:greendao:2.2.1'
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile 'org.apache.commons:commons-lang3:3.4'
+}
