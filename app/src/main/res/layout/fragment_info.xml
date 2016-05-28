@@ -8,7 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingStart="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.darien.openweathertest.view.InfoFragment">
+    tools:context=".view.fragments.InfoFragment">
 
     <ImageView
         android:id="@+id/weatherImg"
@@ -111,6 +111,18 @@
         android:layout_below="@id/humidityTextView"/>
 
     <Button
+        android:id="@+id/sendTweetBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_shape"
+        android:text="@string/send_tweet"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/coordTextView"/>
+
+    <Button
         android:id="@+id/viewInMapBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -120,7 +132,7 @@
         android:layout_alignParentRight="true"
         android:textColor="@android:color/white"
         android:layout_marginTop="8dp"
-        android:layout_below="@+id/coordTextView"/>
+        android:layout_below="@+id/sendTweetBtn"/>
 
     <ProgressBar
         android:id="@+id/progressBar"

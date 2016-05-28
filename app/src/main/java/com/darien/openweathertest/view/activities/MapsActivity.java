@@ -1,8 +1,9 @@
-package com.darien.openweathertest;
+package com.darien.openweathertest.view.activities;
 
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
+import com.darien.openweathertest.R;
 import com.darien.openweathertest.util.BundleConstants;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;

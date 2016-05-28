@@ -1,8 +1,11 @@
-package com.darien.openweathertest;
+package com.darien.openweathertest.view.activities;
 
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+
+import com.darien.openweathertest.AppCompatPreferenceActivity;
+import com.darien.openweathertest.R;
 
 import java.util.List;
 
@@ -18,6 +21,9 @@ import java.util.List;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
+
+    public static final String PREFERENCE_TEMPERATURE_UNIT = "temperature_unit";
+    public static final String DEFAULT_TEMPERATURE_UNIT = "imperial";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

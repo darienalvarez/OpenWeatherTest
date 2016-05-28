@@ -1,7 +1,6 @@
-package com.darien.openweathertest;
+package com.darien.openweathertest.view.activities;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -9,9 +8,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.darien.openweathertest.R;
 import com.darien.openweathertest.controllers.WeatherController;
 import com.darien.openweathertest.db.conf.DatabaseModule;
 import com.darien.openweathertest.services.conf.ServiceModule;
+import com.darien.openweathertest.view.ViewModule;
 import com.darien.openweathertest.view.adapter.SectionsPagerAdapter;
 
 import java.util.LinkedList;
@@ -55,7 +56,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected List<Object> getModules() {
         LinkedList<Object> modules = new LinkedList<>();
-        modules.add(new ActivityModule());
+        modules.add(new ViewModule());
         modules.add(new DatabaseModule());
         modules.add(new ServiceModule());
         return modules;

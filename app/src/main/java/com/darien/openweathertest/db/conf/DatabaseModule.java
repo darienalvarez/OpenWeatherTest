@@ -1,8 +1,6 @@
 package com.darien.openweathertest.db.conf;
 
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.ConnectivityManager;
 
 import com.darien.openweathertest.WeatherApplication;
 import com.darien.openweathertest.db.DaoMaster;

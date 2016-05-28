@@ -1,4 +1,4 @@
-package com.darien.openweathertest.view;
+package com.darien.openweathertest.view.dialogs;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -8,10 +8,11 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import com.darien.openweathertest.BaseActivity;
+import com.darien.openweathertest.view.activities.BaseActivity;
 import com.darien.openweathertest.R;
 import com.darien.openweathertest.controllers.WeatherController;
 import com.darien.openweathertest.db.Zip;
+import com.darien.openweathertest.view.fragments.OnFragmentInteractionListener;
 
 import java.util.Date;
 

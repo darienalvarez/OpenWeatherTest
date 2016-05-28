@@ -1,5 +1,8 @@
 package com.darien.openweathertest.services;
 
+import com.darien.openweathertest.WeatherApplication;
+import com.darien.openweathertest.util.PreferencesUtil;
+
 import java.io.IOException;
 
 import okhttp3.HttpUrl;
@@ -22,6 +25,8 @@ public class TokenInterceptor implements Interceptor {
 
         HttpUrl url = originalHttpUrl.newBuilder()
                 .addQueryParameter("appid", APP_ID)
+                .addQueryParameter("units", PreferencesUtil.getInstance(WeatherApplication.CONTEXT)
+                        .getTemperatureUnit())
                 .build();
 
         // Request customization: add request headers
@@ -31,6 +36,5 @@ public class TokenInterceptor implements Interceptor {
         Request request = requestBuilder.build();
         return chain.proceed(request);
     }
-
 
 }

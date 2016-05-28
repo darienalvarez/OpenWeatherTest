@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.darien.openweathertest.view.InfoFragment;
-import com.darien.openweathertest.view.LocationFragment;
+import com.darien.openweathertest.view.fragments.InfoFragment;
+import com.darien.openweathertest.view.fragments.LocationFragment;
 
 /**
  * Created by Darien

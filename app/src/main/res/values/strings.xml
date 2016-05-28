@@ -14,7 +14,9 @@
     <string name="title_activity_settings">Settings</string>
 
     <!-- String related to weather info -->
+    <string name="city_text">%1$s, %2$s</string>
     <string name="description">Description: %s</string>
+    <string name="tweet_temperature">Current temperature in %1$s is: %2$.1f º%3$s</string>
     <string name="current_temperature">Current temperature: %1$.1f º%2$s</string>
     <string name="min_temperature">Min temperature: %1$.1f º%2$s</string>
     <string name="max_temperature">Max temperature: %1$.1f º%2$s</string>
@@ -34,10 +36,13 @@
         <item>Celsius</item>
     </string-array>
     <string-array name="pref_temperature_list_values">
-        <item>f</item>
-        <item>c</item>
+        <item>imperial</item>
+        <item>metric</item>
     </string-array>
     <string name="title_activity_maps">Map</string>
     <string name="view_in_map">View in map</string>
+    <string name="send_tweet">Send tweet</string>
+    <string name="temperature_unit_default">imperial</string>
+
 
 </resources>

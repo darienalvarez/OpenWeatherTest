@@ -1,9 +1,11 @@
-package com.darien.openweathertest.view;
+package com.darien.openweathertest.view.fragments;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,14 +19,17 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.darien.openweathertest.MapsActivity;
+import com.darien.openweathertest.view.activities.MapsActivity;
 import com.darien.openweathertest.R;
 import com.darien.openweathertest.controllers.WeatherController;
 import com.darien.openweathertest.db.Zip;
 import com.darien.openweathertest.pojo.Forecast;
 import com.darien.openweathertest.pojo.Weather;
 import com.darien.openweathertest.util.BundleConstants;
+import com.darien.openweathertest.util.CameraUtil;
 import com.darien.openweathertest.util.IntentActions;
+import com.darien.openweathertest.util.PreferencesUtil;
+import com.darien.openweathertest.util.TwitterUtil;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -78,7 +83,12 @@ public class InfoFragment extends BaseFragment implements Callback<Forecast> {
         public void onReceive(Context context, Intent intent) {
             String zipCode = intent.getStringExtra(BundleConstants.ZIP_CODE);
             if (!TextUtils.isEmpty(zipCode)) {
+                // try to update with the received zip code
                 updateForecast(zipCode);
+            } else if (!TextUtils.isEmpty(mZipCode)) {
+                // try to update with a preloaded zip code
+                // this broadcast can be executed when a setting preference change
+                updateForecast(mZipCode);
             }
         }
     };
@@ -153,6 +163,16 @@ public class InfoFragment extends BaseFragment implements Callback<Forecast> {
         progressBar.setVisibility(View.GONE);
     }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CameraUtil.REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            //mImageView.setImageBitmap(imageBitmap);
+        }
+    }
+
     @OnClick(R.id.viewInMapBtn)
     void showMap(View view) {
         if (mForecast != null) {
@@ -161,10 +181,25 @@ public class InfoFragment extends BaseFragment implements Callback<Forecast> {
             bundle.putDouble(BundleConstants.LATITUDE, mForecast.getCoord().getLat());
             bundle.putDouble(BundleConstants.LONGITUDE, mForecast.getCoord().getLon());
             bundle.putString(BundleConstants.CITY, mForecast.getName());
+
+            String unit = PreferencesUtil.getInstance(getActivity().getApplicationContext()).getTemperatureUnitReadable();
             bundle.putString(BundleConstants.TEMPERATURE,
-                    getString(R.string.current_temperature, mForecast.getMain().getTemp(), "f"));
+                    getString(R.string.current_temperature, mForecast.getMain().getTemp(), unit));
+
             intent.putExtras(bundle);
             getActivity().startActivity(intent);
+        }
+    }
+
+    @OnClick(R.id.sendTweetBtn)
+    void sendTweet(View view) {
+        Context context = getActivity().getApplicationContext();
+        if (mForecast != null) {
+            TwitterUtil.sendTweet(context,
+                    getString(R.string.tweet_temperature,
+                            mForecast.getName(),
+                            mForecast.getMain().getTemp(),
+                            PreferencesUtil.getInstance(context).getTemperatureUnitReadable()));
         }
     }
 
@@ -179,11 +214,12 @@ public class InfoFragment extends BaseFragment implements Callback<Forecast> {
         mForecast = forecast;
         Log.i(TAG, "updating forecast");
 
-        cityTextView.setText(forecast.getName());
+        cityTextView.setText(getString(R.string.city_text, forecast.getName(), mZipCode));
 
-        currentTempTextView.setText(getString(R.string.current_temperature, forecast.getMain().getTemp(), "f"));
-        minTempTextView.setText(getString(R.string.min_temperature, forecast.getMain().getTempMin(), "f"));
-        maxTempTextView.setText(getString(R.string.max_temperature, forecast.getMain().getTempMax(), "f"));
+        String unit = PreferencesUtil.getInstance(getActivity().getApplicationContext()).getTemperatureUnitReadable();
+        currentTempTextView.setText(getString(R.string.current_temperature, forecast.getMain().getTemp(), unit));
+        minTempTextView.setText(getString(R.string.min_temperature, forecast.getMain().getTempMin(), unit));
+        maxTempTextView.setText(getString(R.string.max_temperature, forecast.getMain().getTempMax(), unit));
 
         windTextView.setText(getString(R.string.wind, forecast.getWind().getSpeed() ));
         cloudTextView.setText(getString(R.string.cloud, forecast.getClouds().getAll() ));
@@ -194,7 +230,6 @@ public class InfoFragment extends BaseFragment implements Callback<Forecast> {
         List<Weather> weathers = forecast.getWeather();
         if (weathers != null && !weathers.isEmpty()) {
             Weather firstWeather = weathers.get(0);
-
 
             Picasso.with(getActivity())
                     .load(String.format("http://openweathermap.org/img/w/%s.png", firstWeather.getIcon()))

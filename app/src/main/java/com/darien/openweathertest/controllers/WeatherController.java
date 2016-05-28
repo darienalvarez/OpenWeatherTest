@@ -4,16 +4,12 @@ import com.darien.openweathertest.db.Zip;
 import com.darien.openweathertest.db.ZipDao;
 import com.darien.openweathertest.pojo.Forecast;
 import com.darien.openweathertest.services.OpenWeatherMapService;
-import com.darien.openweathertest.view.OnFragmentInteractionListener;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import de.greenrobot.dao.query.QueryBuilder;
 import retrofit2.Call;
-import retrofit2.http.Query;
 
 /**
  * Created by Darien

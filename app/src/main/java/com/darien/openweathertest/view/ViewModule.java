@@ -13,16 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.darien.openweathertest;
+package com.darien.openweathertest.view;
 
 import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.view.inputmethod.InputMethodManager;
 
-import com.darien.openweathertest.view.InfoFragment;
-import com.darien.openweathertest.view.LocationFragment;
-import com.darien.openweathertest.view.ZipCodeFragmentDialog;
+import com.darien.openweathertest.view.activities.MainActivity;
+import com.darien.openweathertest.view.activities.MapsActivity;
+import com.darien.openweathertest.WeatherApplication;
+import com.darien.openweathertest.view.fragments.InfoFragment;
+import com.darien.openweathertest.view.fragments.LocationFragment;
+import com.darien.openweathertest.view.dialogs.ZipCodeFragmentDialog;
 
 import dagger.Module;
 import dagger.Provides;
@@ -45,7 +48,7 @@ import dagger.Provides;
         library = true,
         complete = false
 )
-public class ActivityModule {
+public class ViewModule {
 
     @Provides
     public ConnectivityManager provideConnectivityManager() {

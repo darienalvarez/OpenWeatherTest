@@ -1,10 +1,10 @@
-package com.darien.openweathertest.view;
+package com.darien.openweathertest.view.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
-import com.darien.openweathertest.BaseActivity;
+import com.darien.openweathertest.view.activities.BaseActivity;
 
 import butterknife.ButterKnife;
 

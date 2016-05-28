@@ -1,4 +1,4 @@
-package com.darien.openweathertest.view;
+package com.darien.openweathertest.view.fragments;
 
 /**
  * Created by Darien on 5/26/16.

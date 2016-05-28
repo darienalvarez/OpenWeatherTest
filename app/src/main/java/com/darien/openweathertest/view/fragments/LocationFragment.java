@@ -1,4 +1,4 @@
-package com.darien.openweathertest.view;
+package com.darien.openweathertest.view.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,12 +14,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.darien.openweathertest.MainActivity;
+import com.darien.openweathertest.view.activities.MainActivity;
 import com.darien.openweathertest.R;
 import com.darien.openweathertest.controllers.WeatherController;
 import com.darien.openweathertest.db.Zip;
 import com.darien.openweathertest.util.BundleConstants;
 import com.darien.openweathertest.util.IntentActions;
+import com.darien.openweathertest.view.dialogs.ZipCodeFragmentDialog;
 import com.darien.openweathertest.view.adapter.ZipCodesAdapter;
 
 import java.util.ArrayList;
@@ -29,7 +30,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.OnItemSelected;
 
 /**
  * A simple {@link Fragment} subclass.

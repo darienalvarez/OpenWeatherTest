@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.darien.openweathertest;
+package com.darien.openweathertest.view.activities;
 
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -21,6 +21,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import com.darien.openweathertest.WeatherApplication;
+import com.darien.openweathertest.view.ViewModule;
 
 import java.util.List;
 
@@ -83,7 +86,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private void injectDependencies() {
         WeatherApplication weatherApplication = (WeatherApplication) getApplication();
         List<Object> activityScopeModules = getModules();
-        activityScopeModules.add(new ActivityModule());
+        activityScopeModules.add(new ViewModule());
         activityScopeGraph = weatherApplication.plus(activityScopeModules);
         inject(this);
     }
