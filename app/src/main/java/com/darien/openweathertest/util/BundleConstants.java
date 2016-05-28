@@ -7,5 +7,8 @@ package com.darien.openweathertest.util;
 public interface BundleConstants {
     String ZIP_CODE = "zip_code";
 
-
+    String LATITUDE = "latitude";
+    String LONGITUDE = "longitude";
+    String CITY = "city";
+    String TEMPERATURE = "temperature";
 }

@@ -37,5 +37,7 @@
         <item>f</item>
         <item>c</item>
     </string-array>
+    <string name="title_activity_maps">Map</string>
+    <string name="view_in_map">View in map</string>
 
 </resources>

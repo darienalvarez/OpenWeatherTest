@@ -12,13 +12,20 @@
 
     <ImageView
         android:id="@+id/weatherImg"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:scaleType="centerInside"
+        android:scaleType="fitCenter"
         android:adjustViewBounds="true"/>
+
+    <View
+        android:id="@+id/divisor"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorPrimaryDark"
+        android:layout_below="@id/weatherImg"/>
 
     <TextView
         android:id="@+id/cityTextView"
@@ -27,15 +34,36 @@
         android:textAppearance="@android:style/TextAppearance.Large"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignBaseline="@+id/weatherImg"
+        android:textStyle="bold"
+        android:layout_above="@+id/divisor"
         android:textColor="@color/colorPrimary" />
 
-    <View
-        android:id="@+id/divisor"
+    <TextView
+        android:id="@+id/currentTempTextView"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorPrimaryDark"
-        android:layout_below="@id/cityTextView"/>
+        android:layout_height="wrap_content"
+        android:textAppearance="@android:style/TextAppearance.Medium"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/divisor"/>
+
+    <TextView
+        android:id="@+id/minTempTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@android:style/TextAppearance.Medium"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/currentTempTextView"/>
+
+    <TextView
+        android:id="@+id/maxTempTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@android:style/TextAppearance.Medium"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/minTempTextView"/>
 
     <TextView
         android:id="@+id/windTextView"
@@ -43,7 +71,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="@android:style/TextAppearance.Medium"
         android:textColor="@color/colorPrimary"
-        android:layout_below="@id/divisor"/>
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/maxTempTextView"/>
 
     <TextView
         android:id="@+id/cloudTextView"
@@ -51,6 +80,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="@android:style/TextAppearance.Medium"
         android:textColor="@color/colorPrimary"
+        android:layout_marginTop="8dp"
         android:layout_below="@id/windTextView"/>
 
     <TextView
@@ -59,6 +89,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="@android:style/TextAppearance.Medium"
         android:textColor="@color/colorPrimary"
+        android:layout_marginTop="8dp"
         android:layout_below="@id/cloudTextView"/>
 
     <TextView
@@ -67,6 +98,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="@android:style/TextAppearance.Medium"
         android:textColor="@color/colorPrimary"
+        android:layout_marginTop="8dp"
         android:layout_below="@id/pressureTextView"/>
 
     <TextView
@@ -75,7 +107,20 @@
         android:layout_height="wrap_content"
         android:textAppearance="@android:style/TextAppearance.Medium"
         android:textColor="@color/colorPrimary"
+        android:layout_marginTop="8dp"
         android:layout_below="@id/humidityTextView"/>
+
+    <Button
+        android:id="@+id/viewInMapBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_shape"
+        android:text="@string/view_in_map"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/coordTextView"/>
 
     <ProgressBar
         android:id="@+id/progressBar"

@@ -22,11 +22,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.darien.openweathertest.view.InfoFragment;
 import com.darien.openweathertest.view.LocationFragment;
-import com.darien.openweathertest.view.MapFragment;
 import com.darien.openweathertest.view.ZipCodeFragmentDialog;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -40,10 +36,10 @@ import dagger.Provides;
         injects = {
                 //activities
                 MainActivity.class,
+                MapsActivity.class,
                 //fragments
                 InfoFragment.class,
                 LocationFragment.class,
-                MapFragment.class,
                 ZipCodeFragmentDialog.class
         },
         library = true,

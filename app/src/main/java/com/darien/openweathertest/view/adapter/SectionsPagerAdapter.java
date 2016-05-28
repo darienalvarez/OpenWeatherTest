@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.darien.openweathertest.view.InfoFragment;
 import com.darien.openweathertest.view.LocationFragment;
-import com.darien.openweathertest.view.MapFragment;
 
 /**
  * Created by Darien
@@ -24,17 +23,15 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         if (position == 0) {
             return LocationFragment.newInstance();
-        } else if (position == 1) {
-            return InfoFragment.newInstance();
         } else {
-            return MapFragment.newInstance();
+            return InfoFragment.newInstance();
         }
     }
 
     @Override
     public int getCount() {
         // Show 3 total pages.
-        return 3;
+        return 2;
     }
 
     @Override
@@ -44,8 +41,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 return "Location";
             case 1:
                 return "More Info";
-            case 2:
-                return "Map";
         }
         return null;
     }

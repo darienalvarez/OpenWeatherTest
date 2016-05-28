@@ -13,21 +13,27 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.darien.openweathertest.MapsActivity;
 import com.darien.openweathertest.R;
 import com.darien.openweathertest.controllers.WeatherController;
 import com.darien.openweathertest.db.Zip;
 import com.darien.openweathertest.pojo.Forecast;
+import com.darien.openweathertest.pojo.Weather;
 import com.darien.openweathertest.util.BundleConstants;
 import com.darien.openweathertest.util.IntentActions;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,15 +56,22 @@ public class InfoFragment extends BaseFragment implements Callback<Forecast> {
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
 
+    @BindView(R.id.weatherImg)
+    ImageView weatherImg;
+
     @BindView(R.id.cityTextView) TextView cityTextView;
 
     @BindView(R.id.windTextView) TextView windTextView;
     @BindView(R.id.cloudTextView) TextView cloudTextView;
     @BindView(R.id.pressureTextView) TextView pressureTextView;
     @BindView(R.id.humidityTextView) TextView humidityTextView;
-//    @BindView(R.id.sunriseTextView) TextView sunriseTextView;
-//    @BindView(R.id.sunsetTextView) TextView sunsetTextView;
+    @BindView(R.id.currentTempTextView) TextView currentTempTextView;
+    @BindView(R.id.minTempTextView) TextView minTempTextView;
+    @BindView(R.id.maxTempTextView) TextView maxTempTextView;
     @BindView(R.id.coordTextView) TextView coordTextView;
+
+    private String mZipCode;
+    private Forecast mForecast;
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -140,22 +153,53 @@ public class InfoFragment extends BaseFragment implements Callback<Forecast> {
         progressBar.setVisibility(View.GONE);
     }
 
+    @OnClick(R.id.viewInMapBtn)
+    void showMap(View view) {
+        if (mForecast != null) {
+            Intent intent = new Intent(getActivity(), MapsActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putDouble(BundleConstants.LATITUDE, mForecast.getCoord().getLat());
+            bundle.putDouble(BundleConstants.LONGITUDE, mForecast.getCoord().getLon());
+            bundle.putString(BundleConstants.CITY, mForecast.getName());
+            bundle.putString(BundleConstants.TEMPERATURE,
+                    getString(R.string.current_temperature, mForecast.getMain().getTemp(), "f"));
+            intent.putExtras(bundle);
+            getActivity().startActivity(intent);
+        }
+    }
+
     private void updateForecast(String zipCode) {
+        this.mZipCode = zipCode;
         Call<Forecast> call = controller.getForecast(zipCode);
         call.enqueue(this);
         progressBar.setVisibility(View.VISIBLE);
     }
 
     private void updateInterfaceData(Forecast forecast) {
-        Log.i(TAG, forecast.toString());
+        mForecast = forecast;
+        Log.i(TAG, "updating forecast");
 
         cityTextView.setText(forecast.getName());
+
+        currentTempTextView.setText(getString(R.string.current_temperature, forecast.getMain().getTemp(), "f"));
+        minTempTextView.setText(getString(R.string.min_temperature, forecast.getMain().getTempMin(), "f"));
+        maxTempTextView.setText(getString(R.string.max_temperature, forecast.getMain().getTempMax(), "f"));
 
         windTextView.setText(getString(R.string.wind, forecast.getWind().getSpeed() ));
         cloudTextView.setText(getString(R.string.cloud, forecast.getClouds().getAll() ));
         pressureTextView.setText(getString(R.string.pressure, forecast.getMain().getPressure()));
         humidityTextView.setText(getString(R.string.humidity, forecast.getMain().getHumidity()));
         coordTextView.setText(getString(R.string.geo_coords, forecast.getCoord().getLat(), forecast.getCoord().getLon()));
+
+        List<Weather> weathers = forecast.getWeather();
+        if (weathers != null && !weathers.isEmpty()) {
+            Weather firstWeather = weathers.get(0);
+
+
+            Picasso.with(getActivity())
+                    .load(String.format("http://openweathermap.org/img/w/%s.png", firstWeather.getIcon()))
+                    .into(weatherImg);
+        }
     }
 
 }
