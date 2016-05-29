@@ -37,6 +37,7 @@ public class SettingsFragment extends PreferenceFragment
                                           String key) {
         if (key.equals(SettingsActivity.PREFERENCE_TEMPERATURE_UNIT)) {
             Context context = getActivity().getApplicationContext();
+            
             PreferencesUtil.getInstance()
                     .setTemperatureUnit(sharedPreferences
                             .getString(key, SettingsActivity.DEFAULT_TEMPERATURE_UNIT));
