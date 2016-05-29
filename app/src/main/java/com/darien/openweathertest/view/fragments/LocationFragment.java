@@ -15,11 +15,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.darien.openweathertest.BundleConstants;
+import com.darien.openweathertest.IntentActions;
 import com.darien.openweathertest.R;
 import com.darien.openweathertest.controllers.WeatherController;
 import com.darien.openweathertest.db.Zip;
-import com.darien.openweathertest.util.BundleConstants;
-import com.darien.openweathertest.util.IntentActions;
+import com.darien.openweathertest.util.DialogUtil;
 import com.darien.openweathertest.view.activities.MainActivity;
 import com.darien.openweathertest.view.adapter.ZipCodesAdapter;
 import com.darien.openweathertest.view.dialogs.ZipCodeFragmentDialog;
@@ -67,11 +68,6 @@ public class LocationFragment extends BaseFragment implements OnFragmentInteract
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -90,6 +86,9 @@ public class LocationFragment extends BaseFragment implements OnFragmentInteract
             }
         });
 
+        if (!isConnected()) {
+            DialogUtil.showNoConnectionDialog(getActivity());
+        }
     }
 
     @Override
@@ -99,11 +98,15 @@ public class LocationFragment extends BaseFragment implements OnFragmentInteract
 
     private void onItemSelected(int position) {
         MainActivity activity = (MainActivity)getActivity();
-        if (activity != null && mZipCodes != null) {
-            String zipCode = mZipCodes.get(position);
+        if (isConnected()) {
+            if (activity != null && mZipCodes != null) {
+                String zipCode = mZipCodes.get(position);
 
-            activity.showInfoFragment();
-            notifyZipCodeChange(activity, zipCode);
+                activity.showInfoFragment();
+                notifyZipCodeChange(activity, zipCode);
+            }
+        } else {
+            DialogUtil.showErrorDialog(activity, R.string.error_connection);
         }
     }
 

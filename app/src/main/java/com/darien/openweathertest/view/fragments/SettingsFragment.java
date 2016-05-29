@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.darien.openweathertest.IntentActions;
 import com.darien.openweathertest.R;
-import com.darien.openweathertest.util.IntentActions;
 import com.darien.openweathertest.util.PreferencesUtil;
 import com.darien.openweathertest.view.activities.SettingsActivity;
 

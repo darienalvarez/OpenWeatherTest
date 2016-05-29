@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
  */
 public class ZipCodesAdapter extends ArrayAdapter<String> {
 
-    protected LayoutInflater mInflater;
+    private LayoutInflater mInflater;
 
     public ZipCodesAdapter(Context context, List<String> data) {
         super(context, R.layout.item_zip_code, data);
@@ -39,7 +39,7 @@ public class ZipCodesAdapter extends ArrayAdapter<String> {
         }
 
         if (position == 0) {
-            holder.mTextView.setText(getItem(position) + " (Default)");
+            holder.mTextView.setText(getContext().getString(R.string.default_item, getItem(position)));
         } else {
             holder.mTextView.setText(getItem(position));
         }

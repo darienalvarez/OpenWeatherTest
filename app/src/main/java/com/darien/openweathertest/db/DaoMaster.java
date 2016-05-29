@@ -14,15 +14,15 @@ import de.greenrobot.dao.identityscope.IdentityScopeType;
  * Master of DAO (schema version 1000): knows all DAOs.
 */
 public class DaoMaster extends AbstractDaoMaster {
-    public static final int SCHEMA_VERSION = 1000;
+    private static final int SCHEMA_VERSION = 1000;
 
     /** Creates underlying database table using DAOs. */
-    public static void createAllTables(SQLiteDatabase db, boolean ifNotExists) {
+    private static void createAllTables(SQLiteDatabase db, boolean ifNotExists) {
         ZipDao.createTable(db, ifNotExists);
     }
     
     /** Drops underlying database table using DAOs. */
-    public static void dropAllTables(SQLiteDatabase db, boolean ifExists) {
+    private static void dropAllTables(SQLiteDatabase db, boolean ifExists) {
         ZipDao.dropTable(db, ifExists);
     }
     

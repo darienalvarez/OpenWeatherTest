@@ -1,4 +1,4 @@
-package com.darien.openweathertest.util;
+package com.darien.openweathertest;
 
 /**
  * Created by Darien

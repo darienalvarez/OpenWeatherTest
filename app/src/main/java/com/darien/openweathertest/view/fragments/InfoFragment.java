@@ -22,14 +22,15 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.darien.openweathertest.BundleConstants;
+import com.darien.openweathertest.IntentActions;
 import com.darien.openweathertest.R;
 import com.darien.openweathertest.controllers.WeatherController;
 import com.darien.openweathertest.db.Zip;
 import com.darien.openweathertest.pojo.Forecast;
 import com.darien.openweathertest.pojo.Weather;
-import com.darien.openweathertest.util.BundleConstants;
 import com.darien.openweathertest.util.CameraUtil;
-import com.darien.openweathertest.util.IntentActions;
+import com.darien.openweathertest.util.DialogUtil;
 import com.darien.openweathertest.util.PreferencesUtil;
 import com.darien.openweathertest.util.SocialNetworksUtil;
 import com.darien.openweathertest.view.activities.MapsActivity;
@@ -117,11 +118,6 @@ public class InfoFragment extends BaseFragment implements Callback<Forecast> {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -156,6 +152,7 @@ public class InfoFragment extends BaseFragment implements Callback<Forecast> {
         if (response.errorBody() != null) {
             try {
                 error = response.errorBody().string();
+                DialogUtil.showErrorDialog(getActivity(), R.string.error_getting_data);
             } catch (IOException e) {
                 Log.e(TAG, "error body exception", e);
             }
@@ -170,6 +167,7 @@ public class InfoFragment extends BaseFragment implements Callback<Forecast> {
     public void onFailure(Call<Forecast> call, Throwable t) {
         Log.e(TAG, "error", t);
         progressBar.setVisibility(View.GONE);
+        DialogUtil.showErrorDialog(getActivity(), R.string.error_getting_data);
     }
 
 
@@ -180,7 +178,9 @@ public class InfoFragment extends BaseFragment implements Callback<Forecast> {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
 
-            Drawable drawable = CameraUtil.overlayText(getResources(), imageBitmap, "25.2 C");
+            String unit = PreferencesUtil.getInstance(getActivity().getApplicationContext()).getTemperatureUnitReadable();
+            Drawable drawable = CameraUtil.overlayText(getResources(), imageBitmap,
+                    getString(R.string.temperature_with_unit, mForecast.getMain().getTemp(), unit));
             cameraImage.setImageDrawable(drawable);
 
             facebookPostBtn.setVisibility(View.VISIBLE);
@@ -189,39 +189,52 @@ public class InfoFragment extends BaseFragment implements Callback<Forecast> {
 
     @OnClick(R.id.viewInMapBtn)
     void showMap() {
-        if (mForecast != null) {
-            Intent intent = new Intent(getActivity(), MapsActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putDouble(BundleConstants.LATITUDE, mForecast.getCoord().getLat());
-            bundle.putDouble(BundleConstants.LONGITUDE, mForecast.getCoord().getLon());
-            bundle.putString(BundleConstants.CITY, mForecast.getName());
+        if (isConnected()) {
+            if (mForecast != null) {
+                Intent intent = new Intent(getActivity(), MapsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putDouble(BundleConstants.LATITUDE, mForecast.getCoord().getLat());
+                bundle.putDouble(BundleConstants.LONGITUDE, mForecast.getCoord().getLon());
+                bundle.putString(BundleConstants.CITY, mForecast.getName());
 
-            String unit = PreferencesUtil.getInstance(getActivity().getApplicationContext()).getTemperatureUnitReadable();
-            bundle.putString(BundleConstants.TEMPERATURE,
-                    getString(R.string.current_temperature, mForecast.getMain().getTemp(), unit));
+                String unit = PreferencesUtil.getInstance(getActivity().getApplicationContext()).getTemperatureUnitReadable();
+                bundle.putString(BundleConstants.TEMPERATURE,
+                        getString(R.string.current_temperature, mForecast.getMain().getTemp(), unit));
 
-            intent.putExtras(bundle);
-            getActivity().startActivity(intent);
+                intent.putExtras(bundle);
+                getActivity().startActivity(intent);
+            }
+        } else {
+            DialogUtil.showErrorDialog(getActivity(), R.string.error_connection);
         }
     }
 
     @OnClick(R.id.sendTweetBtn)
     void sendTweet() {
         Activity context = getActivity();
-        if (mForecast != null) {
-            SocialNetworksUtil.sendTweet(context,
-                    getString(R.string.tweet_temperature,
-                            mForecast.getName(),
-                            mForecast.getMain().getTemp(),
-                            PreferencesUtil.getInstance(context).getTemperatureUnitReadable()));
+        if (isConnected()) {
+
+            if (mForecast != null) {
+                SocialNetworksUtil.sendTweet(context,
+                        getString(R.string.tweet_temperature,
+                                mForecast.getName(),
+                                mForecast.getMain().getTemp(),
+                                PreferencesUtil.getInstance(context).getTemperatureUnitReadable()));
+            }
+        } else {
+            DialogUtil.showErrorDialog(getActivity(), R.string.error_connection);
         }
     }
 
     @OnClick(R.id.sendFacebookPostBtn)
     void postFacebook() {
         Activity context = getActivity();
-        if (mImageUri != null) {
-            SocialNetworksUtil.sendFacebookPost(context, mImageUri);
+        if (isConnected()) {
+            if (mImageUri != null) {
+                SocialNetworksUtil.sendFacebookPost(context, mImageUri);
+            }
+        } else {
+            DialogUtil.showErrorDialog(getActivity(), R.string.error_connection);
         }
     }
 
@@ -234,9 +247,11 @@ public class InfoFragment extends BaseFragment implements Callback<Forecast> {
 
     private void updateForecast(String zipCode) {
         this.mZipCode = zipCode;
-        Call<Forecast> call = controller.getForecast(zipCode);
-        call.enqueue(this);
-        progressBar.setVisibility(View.VISIBLE);
+        if (isConnected()) {
+            Call<Forecast> call = controller.getForecast(zipCode);
+            call.enqueue(this);
+            progressBar.setVisibility(View.VISIBLE);
+        }
     }
 
     private void updateInterfaceData(Forecast forecast) {
