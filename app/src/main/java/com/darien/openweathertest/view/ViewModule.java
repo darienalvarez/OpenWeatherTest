@@ -20,12 +20,12 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.view.inputmethod.InputMethodManager;
 
+import com.darien.openweathertest.WeatherApplication;
 import com.darien.openweathertest.view.activities.MainActivity;
 import com.darien.openweathertest.view.activities.MapsActivity;
-import com.darien.openweathertest.WeatherApplication;
+import com.darien.openweathertest.view.dialogs.ZipCodeFragmentDialog;
 import com.darien.openweathertest.view.fragments.InfoFragment;
 import com.darien.openweathertest.view.fragments.LocationFragment;
-import com.darien.openweathertest.view.dialogs.ZipCodeFragmentDialog;
 
 import dagger.Module;
 import dagger.Provides;

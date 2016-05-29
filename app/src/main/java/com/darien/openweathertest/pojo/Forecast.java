@@ -20,7 +20,7 @@ public class Forecast {
     private Sys sys;
     @SerializedName("weather")
     @Expose
-    private List<Weather> weather = new ArrayList<Weather>();
+    private List<Weather> weather = new ArrayList<>();
     @SerializedName("base")
     @Expose
     private String base;

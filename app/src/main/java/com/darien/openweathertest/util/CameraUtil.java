@@ -1,6 +1,5 @@
 package com.darien.openweathertest.util;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;

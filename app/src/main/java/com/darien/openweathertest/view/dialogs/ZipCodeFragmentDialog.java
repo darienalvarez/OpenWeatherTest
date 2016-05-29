@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import com.darien.openweathertest.view.activities.BaseActivity;
 import com.darien.openweathertest.R;
 import com.darien.openweathertest.controllers.WeatherController;
 import com.darien.openweathertest.db.Zip;
+import com.darien.openweathertest.view.activities.BaseActivity;
 import com.darien.openweathertest.view.fragments.OnFragmentInteractionListener;
 
 import java.util.Date;
@@ -68,19 +68,20 @@ public class ZipCodeFragmentDialog extends DialogFragment {
         super.onActivityCreated(savedInstanceState);
         BaseActivity baseActivity = (BaseActivity) getActivity();
         baseActivity.inject(this);
-        ButterKnife.bind(this, getView());
-
+        if (getView() != null) {
+            ButterKnife.bind(this, getView());
+        }
         getDialog().setTitle(R.string.title_add_zip_code);
     }
 
     @OnClick(R.id.addZipCodeBtn)
-    void saveZipCode(View view) {
+    void saveZipCode() {
         boolean current = defaultCheckBox.isChecked();
         String zipCode = zipCodeEditText.getText().toString();
 
         Zip zip = new Zip(null, zipCode, current, new Date());
         controller.addZipCodeToDatabase(zip);
-        mListener.onFragmentInteraction(null);
+        mListener.onFragmentInteraction();
         dismiss();
     }
 

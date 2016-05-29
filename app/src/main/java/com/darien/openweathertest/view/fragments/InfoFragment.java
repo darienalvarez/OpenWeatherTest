@@ -22,8 +22,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.darien.openweathertest.util.SocialNetworksUtil;
-import com.darien.openweathertest.view.activities.MapsActivity;
 import com.darien.openweathertest.R;
 import com.darien.openweathertest.controllers.WeatherController;
 import com.darien.openweathertest.db.Zip;
@@ -33,6 +31,8 @@ import com.darien.openweathertest.util.BundleConstants;
 import com.darien.openweathertest.util.CameraUtil;
 import com.darien.openweathertest.util.IntentActions;
 import com.darien.openweathertest.util.PreferencesUtil;
+import com.darien.openweathertest.util.SocialNetworksUtil;
+import com.darien.openweathertest.view.activities.MapsActivity;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -206,7 +206,7 @@ public class InfoFragment extends BaseFragment implements Callback<Forecast> {
     }
 
     @OnClick(R.id.sendTweetBtn)
-    void sendTweet(View view) {
+    void sendTweet() {
         Activity context = getActivity();
         if (mForecast != null) {
             SocialNetworksUtil.sendTweet(context,
@@ -218,7 +218,7 @@ public class InfoFragment extends BaseFragment implements Callback<Forecast> {
     }
 
     @OnClick(R.id.sendFacebookPostBtn)
-    void postFacebook(View view) {
+    void postFacebook() {
         Activity context = getActivity();
         if (mImageUri != null) {
             SocialNetworksUtil.sendFacebookPost(context, mImageUri);
@@ -226,7 +226,7 @@ public class InfoFragment extends BaseFragment implements Callback<Forecast> {
     }
 
     @OnClick(R.id.cameraImage)
-    void takePicture(View view) {
+    void takePicture() {
         if (mForecast != null) {
             CameraUtil.dispatchTakePictureIntent(this);
         }

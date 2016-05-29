@@ -15,14 +15,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.darien.openweathertest.view.activities.MainActivity;
 import com.darien.openweathertest.R;
 import com.darien.openweathertest.controllers.WeatherController;
 import com.darien.openweathertest.db.Zip;
 import com.darien.openweathertest.util.BundleConstants;
 import com.darien.openweathertest.util.IntentActions;
-import com.darien.openweathertest.view.dialogs.ZipCodeFragmentDialog;
+import com.darien.openweathertest.view.activities.MainActivity;
 import com.darien.openweathertest.view.adapter.ZipCodesAdapter;
+import com.darien.openweathertest.view.dialogs.ZipCodeFragmentDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +93,7 @@ public class LocationFragment extends BaseFragment implements OnFragmentInteract
     }
 
     @Override
-    public void onFragmentInteraction(String... params) {
+    public void onFragmentInteraction() {
         loadZipCodeList();
     }
 
@@ -108,7 +108,7 @@ public class LocationFragment extends BaseFragment implements OnFragmentInteract
     }
 
     @OnClick(R.id.addZipCodeBtn)
-    void addZipCode(View view) {
+    void addZipCode() {
         showAddZipCodeDialog();
     }
 
