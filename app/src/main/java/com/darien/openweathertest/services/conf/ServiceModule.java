@@ -19,8 +19,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 )
 public class ServiceModule {
 
-    private final String BASE_URL = "http://api.openweathermap.org/data/2.5/";
-
     @Provides
     OkHttpClient provideOkHttpClient() {
         return new OkHttpClient.Builder()
@@ -30,6 +28,8 @@ public class ServiceModule {
 
     @Provides
     Retrofit provideRetrofit(OkHttpClient client) {
+        final String BASE_URL = "http://api.openweathermap.org/data/2.5/";
+
         return new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())

@@ -62,7 +62,7 @@ public class Coord {
         if (other == this) {
             return true;
         }
-        if ((other instanceof Coord) == false) {
+        if (!(other instanceof Coord)) {
             return false;
         }
         Coord rhs = ((Coord) other);

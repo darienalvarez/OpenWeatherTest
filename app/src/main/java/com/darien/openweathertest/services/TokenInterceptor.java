@@ -16,10 +16,10 @@ import okhttp3.Response;
  */
 public class TokenInterceptor implements Interceptor {
 
-    private final String APP_ID = "3b535043693316ba125a0513276aa62d";
-
     @Override
     public Response intercept(Chain chain) throws IOException {
+        final String APP_ID = "3b535043693316ba125a0513276aa62d";
+
         Request original = chain.request();
         HttpUrl originalHttpUrl = original.url();
 

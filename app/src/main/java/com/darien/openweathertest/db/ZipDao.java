@@ -25,7 +25,7 @@ public class ZipDao extends AbstractDao<Zip, Long> {
         public final static Property ZipCode = new Property(1, String.class, "zipCode", false, "ZIP_CODE");
         public final static Property Current = new Property(2, boolean.class, "current", false, "CURRENT");
         public final static Property Date = new Property(3, java.util.Date.class, "date", false, "DATE");
-    };
+    }
 
 
     public ZipDao(DaoConfig config) {
@@ -77,25 +77,24 @@ public class ZipDao extends AbstractDao<Zip, Long> {
     /** @inheritdoc */
     @Override
     public Long readKey(Cursor cursor, int offset) {
-        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
+        return cursor.isNull(offset) ? null : cursor.getLong(offset);
     }    
 
     /** @inheritdoc */
     @Override
     public Zip readEntity(Cursor cursor, int offset) {
-        Zip entity = new Zip( //
-            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
+        return new Zip( //
+            cursor.isNull(offset) ? null : cursor.getLong(offset), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // zipCode
             cursor.getShort(offset + 2) != 0, // current
             cursor.isNull(offset + 3) ? null : new java.util.Date(cursor.getLong(offset + 3)) // date
         );
-        return entity;
     }
      
     /** @inheritdoc */
     @Override
     public void readEntity(Cursor cursor, Zip entity, int offset) {
-        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setId(cursor.isNull(offset) ? null : cursor.getLong(offset));
         entity.setZipCode(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setCurrent(cursor.getShort(offset + 2) != 0);
         entity.setDate(cursor.isNull(offset + 3) ? null : new java.util.Date(cursor.getLong(offset + 3)));

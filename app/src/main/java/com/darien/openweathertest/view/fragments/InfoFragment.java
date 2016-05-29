@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,10 +17,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.darien.openweathertest.util.SocialNetworksUtil;
 import com.darien.openweathertest.view.activities.MapsActivity;
 import com.darien.openweathertest.R;
 import com.darien.openweathertest.controllers.WeatherController;
@@ -29,7 +33,6 @@ import com.darien.openweathertest.util.BundleConstants;
 import com.darien.openweathertest.util.CameraUtil;
 import com.darien.openweathertest.util.IntentActions;
 import com.darien.openweathertest.util.PreferencesUtil;
-import com.darien.openweathertest.util.TwitterUtil;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -60,9 +63,13 @@ public class InfoFragment extends BaseFragment implements Callback<Forecast> {
 
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
+    @BindView(R.id.sendFacebookPostBtn)
+    Button facebookPostBtn;
 
     @BindView(R.id.weatherImg)
     ImageView weatherImg;
+    @BindView(R.id.cameraImage)
+    ImageView cameraImage;
 
     @BindView(R.id.cityTextView) TextView cityTextView;
 
@@ -77,6 +84,7 @@ public class InfoFragment extends BaseFragment implements Callback<Forecast> {
 
     private String mZipCode;
     private Forecast mForecast;
+    private Uri mImageUri;
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -92,6 +100,7 @@ public class InfoFragment extends BaseFragment implements Callback<Forecast> {
             }
         }
     };
+
 
     public InfoFragment() {
         // Required empty public constructor
@@ -167,14 +176,19 @@ public class InfoFragment extends BaseFragment implements Callback<Forecast> {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CameraUtil.REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            mImageUri = data.getData();
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            //mImageView.setImageBitmap(imageBitmap);
+
+            Drawable drawable = CameraUtil.overlayText(getResources(), imageBitmap, "25.2 C");
+            cameraImage.setImageDrawable(drawable);
+
+            facebookPostBtn.setVisibility(View.VISIBLE);
         }
     }
 
     @OnClick(R.id.viewInMapBtn)
-    void showMap(View view) {
+    void showMap() {
         if (mForecast != null) {
             Intent intent = new Intent(getActivity(), MapsActivity.class);
             Bundle bundle = new Bundle();
@@ -193,13 +207,28 @@ public class InfoFragment extends BaseFragment implements Callback<Forecast> {
 
     @OnClick(R.id.sendTweetBtn)
     void sendTweet(View view) {
-        Context context = getActivity().getApplicationContext();
+        Activity context = getActivity();
         if (mForecast != null) {
-            TwitterUtil.sendTweet(context,
+            SocialNetworksUtil.sendTweet(context,
                     getString(R.string.tweet_temperature,
                             mForecast.getName(),
                             mForecast.getMain().getTemp(),
                             PreferencesUtil.getInstance(context).getTemperatureUnitReadable()));
+        }
+    }
+
+    @OnClick(R.id.sendFacebookPostBtn)
+    void postFacebook(View view) {
+        Activity context = getActivity();
+        if (mImageUri != null) {
+            SocialNetworksUtil.sendFacebookPost(context, mImageUri);
+        }
+    }
+
+    @OnClick(R.id.cameraImage)
+    void takePicture(View view) {
+        if (mForecast != null) {
+            CameraUtil.dispatchTakePictureIntent(this);
         }
     }
 

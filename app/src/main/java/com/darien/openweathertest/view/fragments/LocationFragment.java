@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.darien.openweathertest.view.activities.MainActivity;
 import com.darien.openweathertest.R;
@@ -43,6 +44,8 @@ public class LocationFragment extends BaseFragment implements OnFragmentInteract
 
     @BindView(R.id.selectForecastList)
     ListView listView;
+    @BindView(R.id.empty)
+    TextView emptyView;
 
     @Inject
     WeatherController controller;
@@ -86,6 +89,7 @@ public class LocationFragment extends BaseFragment implements OnFragmentInteract
                 onItemSelected(i);
             }
         });
+
     }
 
     @Override
@@ -138,6 +142,8 @@ public class LocationFragment extends BaseFragment implements OnFragmentInteract
     }
 
     private void updateZipCodeList(List<String> zipCodes) {
+        emptyView.setVisibility(zipCodes.isEmpty() ? View.VISIBLE: View.GONE);
+
         ZipCodesAdapter adapter = new ZipCodesAdapter(getActivity(), zipCodes);
         listView.setAdapter(adapter);
     }

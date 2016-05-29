@@ -146,7 +146,7 @@ public class Sys {
         if (other == this) {
             return true;
         }
-        if ((other instanceof Sys) == false) {
+        if (!(other instanceof Sys)) {
             return false;
         }
         Sys rhs = ((Sys) other);

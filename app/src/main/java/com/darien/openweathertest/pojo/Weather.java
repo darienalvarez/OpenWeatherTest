@@ -104,7 +104,7 @@ public class Weather {
         if (other == this) {
             return true;
         }
-        if ((other instanceof Weather) == false) {
+        if (!(other instanceof Weather)) {
             return false;
         }
         Weather rhs = ((Weather) other);

@@ -1,26 +1,23 @@
 <resources>
     <string name="app_name">OpenWeatherTest</string>
-    <string name="action_settings">Settings</string>
-    <string name="section_format">Hello World from section: %1$d</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="select_forecast_area">Select forecast area</string>
+    <!-- Menu -->
+    <string name="action_settings">Settings</string>
+
+    <!-- String related to location info -->
+    <string name="select_forecast_area">Select forecast area:</string>
     <string name="defaultText">Default</string>
     <string name="add">Add</string>
-    <string name="title_activity_main2">Main2Activity</string>
     <string name="title_add_zip_code">Add location</string>
     <string name="zip_code">Zip code</string>
-    <string name="title_activity_settings">Settings</string>
+    <string name="icon_next">Next</string>
 
     <!-- String related to weather info -->
     <string name="city_text">%1$s, %2$s</string>
-    <string name="description">Description: %s</string>
     <string name="tweet_temperature">Current temperature in %1$s is: %2$.1f º%3$s</string>
     <string name="current_temperature">Current temperature: %1$.1f º%2$s</string>
     <string name="min_temperature">Min temperature: %1$.1f º%2$s</string>
     <string name="max_temperature">Max temperature: %1$.1f º%2$s</string>
-
     <string name="wind">Wind: %.1f m/s</string>
     <string name="cloud">Cloudiness: %d %%</string>
     <string name="pressure">Pressure: %.0f hPa</string>
@@ -28,21 +25,21 @@
     <string name="geo_coords">Geo coords: [ %1$.4f, %2$.4f ]</string>
     <string name="pref_title_temperature_unit">Unit of measurement</string>
     <string name="temperature">Temperature</string>
-
-    <!-- Strings related to Settings -->
-
-    <string-array name="pref_temperature_list_titles">
-        <item>Fahrenheits</item>
-        <item>Celsius</item>
-    </string-array>
-    <string-array name="pref_temperature_list_values">
-        <item>imperial</item>
-        <item>metric</item>
-    </string-array>
-    <string name="title_activity_maps">Map</string>
-    <string name="view_in_map">View in map</string>
     <string name="send_tweet">Send tweet</string>
     <string name="temperature_unit_default">imperial</string>
+    <string name="image_weather">Weather description image</string>
 
+    <!-- Strings related to Settings -->
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Empty view -->
+    <string name="empty_location_list">Please add new location</string>
+    <string name="empty_weather_info_list">Please select a location</string>
+
+    <!-- Strings related to Map -->
+    <string name="title_activity_maps">Map</string>
+    <string name="view_in_map">View in map</string>
+    <string name="take_picture">Take picture</string>
+    <string name="send_facebook_post">Post in Facebook</string>
 
 </resources>

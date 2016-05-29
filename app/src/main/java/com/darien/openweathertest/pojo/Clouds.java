@@ -41,7 +41,7 @@ public class Clouds {
         if (other == this) {
             return true;
         }
-        if ((other instanceof Clouds) == false) {
+        if (!(other instanceof Clouds)) {
             return false;
         }
         Clouds rhs = ((Clouds) other);

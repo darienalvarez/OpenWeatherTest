@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="spinnerEmpty">
-        <item>Select zip code</item>
+    <string-array name="pref_temperature_list_titles">
+        <item>Fahrenheits</item>
+        <item>Celsius</item>
+    </string-array>
+    <string-array name="pref_temperature_list_values">
+        <item>imperial</item>
+        <item>metric</item>
     </string-array>
 </resources>

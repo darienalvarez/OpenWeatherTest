@@ -63,7 +63,7 @@ public class Wind {
         if (other == this) {
             return true;
         }
-        if ((other instanceof Wind) == false) {
+        if (!(other instanceof Wind)) {
             return false;
         }
         Wind rhs = ((Wind) other);

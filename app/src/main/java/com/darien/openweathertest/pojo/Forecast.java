@@ -254,7 +254,7 @@ public class Forecast {
         if (other == this) {
             return true;
         }
-        if ((other instanceof Forecast) == false) {
+        if (!(other instanceof Forecast)) {
             return false;
         }
         Forecast rhs = ((Forecast) other);

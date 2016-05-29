@@ -125,7 +125,7 @@ public class Main {
         if (other == this) {
             return true;
         }
-        if ((other instanceof Main) == false) {
+        if (!(other instanceof Main)) {
             return false;
         }
         Main rhs = ((Main) other);
