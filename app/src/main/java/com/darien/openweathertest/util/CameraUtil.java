@@ -14,6 +14,8 @@ import com.darien.openweathertest.view.TextDrawable;
 /**
  * Created by Darien
  * on 5/27/16.
+ *
+ * Helper to take pictures
  */
 public class CameraUtil {
 
@@ -24,6 +26,14 @@ public class CameraUtil {
         fragment.startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
     }
 
+    /**
+     * Overlay a text on a corner of a image
+     *
+     * @param resources   Resources instance
+     * @param source      Background bitmap
+     * @param temperature Overlay text (temperature)
+     * @return Drawable with and image with text overlay
+     */
     public static Drawable overlayText(Resources resources, Bitmap source, String temperature) {
         Drawable[] layers = new Drawable[2];
         layers[0] = new BitmapDrawable(resources, source);

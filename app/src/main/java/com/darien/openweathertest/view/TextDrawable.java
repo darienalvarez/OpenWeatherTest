@@ -12,10 +12,12 @@ import android.util.TypedValue;
 /**
  * Created by Darien
  * on 5/28/16.
+ *
+ * Create a Drawable based on a Text
  */
 public class TextDrawable extends Drawable {
     private static final int DEFAULT_COLOR = Color.WHITE;
-    private static final int DEFAULT_TEXTSIZE = 15;
+    private static final int DEFAULT_TEXT_SIZE = 15;
     private final Paint mPaint;
     private final CharSequence mText;
     private final int mIntrinsicWidth;
@@ -27,7 +29,7 @@ public class TextDrawable extends Drawable {
         mPaint.setColor(DEFAULT_COLOR);
         mPaint.setTextAlign(Paint.Align.LEFT);
         float textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
-                DEFAULT_TEXTSIZE, res.getDisplayMetrics());
+                DEFAULT_TEXT_SIZE, res.getDisplayMetrics());
         mPaint.setTextSize(textSize);
         mIntrinsicWidth = (int) (mPaint.measureText(mText, 0, mText.length()) + .5);
         mIntrinsicHeight = mPaint.getFontMetricsInt(null);
@@ -36,7 +38,7 @@ public class TextDrawable extends Drawable {
     public void draw(Canvas canvas) {
         Rect bounds = getBounds();
         canvas.drawText(mText, 0, mText.length(),
-                bounds.left, bounds.top + DEFAULT_TEXTSIZE, mPaint);
+                bounds.left, bounds.top + DEFAULT_TEXT_SIZE, mPaint);
     }
     @Override
     public int getOpacity() {

@@ -178,7 +178,7 @@ public class InfoFragment extends BaseFragment implements Callback<Forecast> {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
 
-            String unit = PreferencesUtil.getInstance(getActivity().getApplicationContext()).getTemperatureUnitReadable();
+            String unit = PreferencesUtil.getInstance().getTemperatureUnitReadable();
             Drawable drawable = CameraUtil.overlayText(getResources(), imageBitmap,
                     getString(R.string.temperature_with_unit, mForecast.getMain().getTemp(), unit));
             cameraImage.setImageDrawable(drawable);
@@ -197,7 +197,7 @@ public class InfoFragment extends BaseFragment implements Callback<Forecast> {
                 bundle.putDouble(BundleConstants.LONGITUDE, mForecast.getCoord().getLon());
                 bundle.putString(BundleConstants.CITY, mForecast.getName());
 
-                String unit = PreferencesUtil.getInstance(getActivity().getApplicationContext()).getTemperatureUnitReadable();
+                String unit = PreferencesUtil.getInstance().getTemperatureUnitReadable();
                 bundle.putString(BundleConstants.TEMPERATURE,
                         getString(R.string.current_temperature, mForecast.getMain().getTemp(), unit));
 
@@ -219,7 +219,7 @@ public class InfoFragment extends BaseFragment implements Callback<Forecast> {
                         getString(R.string.tweet_temperature,
                                 mForecast.getName(),
                                 mForecast.getMain().getTemp(),
-                                PreferencesUtil.getInstance(context).getTemperatureUnitReadable()));
+                                PreferencesUtil.getInstance().getTemperatureUnitReadable()));
             }
         } else {
             DialogUtil.showErrorDialog(getActivity(), R.string.error_connection);
@@ -260,7 +260,7 @@ public class InfoFragment extends BaseFragment implements Callback<Forecast> {
 
         cityTextView.setText(getString(R.string.city_text, forecast.getName(), mZipCode));
 
-        String unit = PreferencesUtil.getInstance(getActivity().getApplicationContext()).getTemperatureUnitReadable();
+        String unit = PreferencesUtil.getInstance().getTemperatureUnitReadable();
         currentTempTextView.setText(getString(R.string.current_temperature, forecast.getMain().getTemp(), unit));
         minTempTextView.setText(getString(R.string.min_temperature, forecast.getMain().getTempMin(), unit));
         maxTempTextView.setText(getString(R.string.max_temperature, forecast.getMain().getTempMax(), unit));

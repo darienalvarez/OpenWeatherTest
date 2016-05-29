@@ -15,6 +15,8 @@ import com.darien.openweathertest.view.activities.BaseActivity;
 import com.darien.openweathertest.view.fragments.OnFragmentInteractionListener;
 
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
@@ -74,10 +76,17 @@ public class ZipCodeFragmentDialog extends DialogFragment {
         boolean current = defaultCheckBox.isChecked();
         String zipCode = zipCodeEditText.getText().toString();
 
-        Zip zip = new Zip(null, zipCode, current, new Date());
-        controller.addZipCodeToDatabase(zip);
-        mListener.onFragmentInteraction();
-        dismiss();
+        Pattern pattern = Pattern.compile("(^\\d{5}$)|(^\\d{5}-\\d{4}$)");
+        Matcher matcher = pattern.matcher(zipCode);
+
+        if (matcher.matches()) {
+            Zip zip = new Zip(null, zipCode, current, new Date());
+            controller.addZipCodeToDatabase(zip);
+            mListener.onFragmentInteraction();
+            dismiss();
+        } else {
+            zipCodeEditText.setError(getString(R.string.error_zip_code));
+        }
     }
 
 

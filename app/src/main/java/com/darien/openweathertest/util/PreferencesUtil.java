@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.darien.openweathertest.WeatherApplication;
 import com.darien.openweathertest.view.activities.SettingsActivity;
 
 /**
  * Created by Darien
  * on 5/28/16.
+ *
+ * Reads preferences
  */
 public class PreferencesUtil {
 
@@ -22,9 +25,14 @@ public class PreferencesUtil {
                 SettingsActivity.DEFAULT_TEMPERATURE_UNIT);
     }
 
-    public static PreferencesUtil getInstance(Context context) {
+    /**
+     * Return a single instance of PreferenceUtil
+     *
+     * @return PreferenceUtil instance
+     */
+    public static PreferencesUtil getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new PreferencesUtil(context);
+            INSTANCE = new PreferencesUtil(WeatherApplication.CONTEXT);
         }
 
         return INSTANCE;
@@ -41,6 +49,11 @@ public class PreferencesUtil {
         return "C";
     }
 
+    /**
+     * Use this method to get the real parameter value for the web service
+     *
+     * @return "imperial" for Fahrenheit and "metric" for Celsius
+     */
     public String getTemperatureUnit() {
         return mTemperatureUnit;
     }

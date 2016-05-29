@@ -12,6 +12,8 @@ import com.darien.openweathertest.R;
 /**
  * Created by Darien
  * on 5/19/16.
+ *
+ * Helpers methods to build dialogs
  */
 public class DialogUtil {
 
@@ -63,6 +65,5 @@ public class DialogUtil {
             builder.show();
         }
     }
-
 
 }

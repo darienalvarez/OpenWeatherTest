@@ -53,6 +53,7 @@
     <string name="error">Error</string>
     <string name="error_connection">There is no Internet connection. You can not execute this action!</string>
     <string name="error_getting_data">Error getting data. Please try again in few seconds.</string>
+    <string name="error_zip_code">This is no valid US zip code</string>
 
 
 </resources>
